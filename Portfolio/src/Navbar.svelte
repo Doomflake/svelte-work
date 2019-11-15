@@ -4,8 +4,9 @@ import Navbutton from "./Navbutton.svelte";
 </script>
 <style>
 div {
-    border: 1px dashed black;
     margin: auto;
+    width: 100%;
+    overflow: hidden;
 }
 </style>
 <div>

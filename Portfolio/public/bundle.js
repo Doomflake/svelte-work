@@ -983,8 +983,8 @@ var app = (function () {
 
     			if (default_slot) default_slot.c();
 
-    			attr_dev(button, "class", "svelte-12bin4e");
-    			add_location(button, file$3, 10, 0, 128);
+    			attr_dev(button, "class", "svelte-rzh7u3");
+    			add_location(button, file$3, 13, 0, 233);
     		},
 
     		l: function claim(nodes) {
@@ -1062,7 +1062,7 @@ var app = (function () {
 
     const file$4 = "src/Navbar.svelte";
 
-    // (12:0) <Navbutton>
+    // (13:0) <Navbutton>
     function create_default_slot_3(ctx) {
     	var t;
 
@@ -1081,11 +1081,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3.name, type: "slot", source: "(12:0) <Navbutton>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_3.name, type: "slot", source: "(13:0) <Navbutton>", ctx });
     	return block;
     }
 
-    // (13:0) <Navbutton>
+    // (14:0) <Navbutton>
     function create_default_slot_2(ctx) {
     	var t;
 
@@ -1104,11 +1104,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2.name, type: "slot", source: "(13:0) <Navbutton>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_2.name, type: "slot", source: "(14:0) <Navbutton>", ctx });
     	return block;
     }
 
-    // (14:0) <Navbutton>
+    // (15:0) <Navbutton>
     function create_default_slot_1(ctx) {
     	var t;
 
@@ -1127,11 +1127,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1.name, type: "slot", source: "(14:0) <Navbutton>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot_1.name, type: "slot", source: "(15:0) <Navbutton>", ctx });
     	return block;
     }
 
-    // (15:0) <Navbutton>
+    // (16:0) <Navbutton>
     function create_default_slot$1(ctx) {
     	var t;
 
@@ -1150,7 +1150,7 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$1.name, type: "slot", source: "(15:0) <Navbutton>", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot$1.name, type: "slot", source: "(16:0) <Navbutton>", ctx });
     	return block;
     }
 
@@ -1199,8 +1199,8 @@ var app = (function () {
     			navbutton2.$$.fragment.c();
     			t2 = space();
     			navbutton3.$$.fragment.c();
-    			attr_dev(div, "class", "svelte-xt2kfo");
-    			add_location(div, file$4, 10, 0, 137);
+    			attr_dev(div, "class", "svelte-wzhbhq");
+    			add_location(div, file$4, 11, 0, 146);
     		},
 
     		l: function claim(nodes) {
@@ -1806,8 +1806,8 @@ var app = (function () {
     const app = new App({
     	target: document.body,
     	props: {
-    		name: 'world'
-    	}
+    		name: 'world',
+    	},
     });
 
     return app;
