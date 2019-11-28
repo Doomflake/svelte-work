@@ -1,3 +1,16 @@
+<script>
+
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
+	function sayHello() {
+		dispatch('message', {
+			text: 'Hello!'
+		});
+	}
+
+</script>
 <style>
     button {
         font: inherit;
@@ -10,8 +23,9 @@
     button:hover, button:active {
         box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.26);
     }
+    
 </style>
 
-<button on:click>
+<button on:click={sayHello}>
 <slot />
 </button>

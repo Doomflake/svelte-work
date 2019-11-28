@@ -1,3 +1,16 @@
+<script>
+
+	import { createEventDispatcher } from 'svelte';
+    import current from "./App.svelte";
+	const dispatch = createEventDispatcher();
+
+	function sayHello() {
+		dispatch('message', {
+			text: {current}
+		});
+	}
+
+</script>
 <style>
 button {
     background: tan;
@@ -8,10 +21,11 @@ button {
     margin: auto;
     text-align: center;
     float: left;
+    display: block;
 }
 </style>
 
-<button>
+<button on:click={sayHello}>
 <slot />
 </button> 
 

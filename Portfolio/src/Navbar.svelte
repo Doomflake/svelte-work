@@ -1,6 +1,6 @@
 <script>
 import Navbutton from "./Navbutton.svelte";
-
+import current from "./App.svelte";
 </script>
 <style>
 div {
@@ -8,10 +8,16 @@ div {
     width: 100%;
     overflow: hidden;
 }
+.active {
+		background-color: #ff3e00;
+		color: white;
+	}
 </style>
 <div>
-<Navbutton>Home</Navbutton>
-<Navbutton>About</Navbutton>
-<Navbutton>Contact</Navbutton>
-<Navbutton>Examples</Navbutton>
+<Navbutton on:message class="{current === 'home' ? 'active' : ''}"
+	on:click="{() => current = 'home'}">Home</Navbutton>
+<Navbutton on:message class="{current === 'about' ? 'active' : ''}"
+	on:click="{() => current = 'about'}">About</Navbutton>
+<Navbutton on:message>Contact</Navbutton>
+<Navbutton on:message>Examples</Navbutton>
 </div>
