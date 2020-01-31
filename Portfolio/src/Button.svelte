@@ -1,5 +1,5 @@
 <script>
-
+    import {current} from "./App.svelte";
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -26,6 +26,6 @@
     
 </style>
 
-<button on:click={sayHello}>
+<button class={$$props.class}>
 <slot />
 </button>
