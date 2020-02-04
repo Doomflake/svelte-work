@@ -1,15 +1,15 @@
 <script>
 
 	import { createEventDispatcher } from 'svelte';
-    import {current} from "./App.svelte";
+    
 	const dispatch = createEventDispatcher();
 
-	function navhandler() {
+/*	function navhandler() {
 		dispatch('message', {
 			text: {current}
 		});
 	}
-
+*/
 </script>
 <style>
 button {
@@ -26,7 +26,7 @@ button {
 
 </style>
 
-<button on:click={navhandler} >
+<button on:click >
 <slot />
 </button> 
 

@@ -1,6 +1,5 @@
 <script>
 import Navbutton from "./Navbutton.svelte";
-import current from "./App.svelte";
 </script>
 <style>
 div {
@@ -13,8 +12,8 @@ div {
 }
 </style>
 <div>
-<Navbutton>Home</Navbutton>
-<Navbutton>About</Navbutton>
-<Navbutton>Contact</Navbutton>
-<Navbutton>Examples</Navbutton>
+<Navbutton on:click >Home</Navbutton>
+<Navbutton on:click >About</Navbutton>
+<Navbutton on:click >Contact</Navbutton>
+<Navbutton on:click >Examples</Navbutton>
 </div>

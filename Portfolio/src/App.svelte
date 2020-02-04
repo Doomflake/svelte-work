@@ -1,7 +1,6 @@
 <script>
 	import LogRocket from 'logrocket';
 LogRocket.init('xz0riz/svelte_profile_dev');
-	import Product from "./Product.svelte";
 	import Button from './Button.svelte';
 	import Cart from "./Cart.svelte";
 	import Navbar from "./Navbar.svelte";
@@ -9,15 +8,12 @@ LogRocket.init('xz0riz/svelte_profile_dev');
 	import Imag from "./image.svelte";
 	import Homepage from "./Homepage.svelte";
 	import Example from "./Examples.svelte";
-	function navhandler(event) {
-		alert({current});
+	import Contact from "./Contact.svelte";
+	import About from "./About.svelte";
+	
+	function handleClick() {
+		alert('clicked')
 	}
-
-	let current = 'foo';
-	
-	
-	
-
 </script>
 
 <style>
@@ -26,10 +22,10 @@ LogRocket.init('xz0riz/svelte_profile_dev');
 		width: 100%;
 		margin: auto;
 	}	
-	#Homepage {
-		display: none;
+	#Frontpage {
+		display: block;
 	}
-	#About {
+	#Aboutme {
 		display: none;
 	}
 	/*.aboutimage {
@@ -40,54 +36,34 @@ LogRocket.init('xz0riz/svelte_profile_dev');
     	max-height: 300px;
 		padding-bottom: 1.5em;
 	} */
-	#Contact {
+	#contactform {
 		display: none;
 	}
 	#Examples {
-		display: block;
+		display: none;
 	}	
-	.active {
-		background-color: #ff3e00;
-		color: white;
-	}
-	button {
-		display: block;
-		float: left;
-		margin: auto;
-	}
+	
+	
 </style>
 
 <section>
-	<Navbar />	
+	<Navbar on:click={handleClick} class="{current === 'foo' ? 'active' : ''}"
+	on:click="{() => current = 'foo'}"/>	
 	</section>
 	
 	<hr>
-	<section id='Homepage'>
+	<section id='Frontpage'>
 	<Homepage />
 	</section>
 
-	<section id='About'>
-	<about />
-	</section>
+<div id='Aboutme'>
+	<About />
+</div>
 
-	<section id="Contact">
-	<contact />
-		</section>
+<div id="contactform">
+	<Contact />
+</div>
 
-	<section id="Examples">
-	<Example />
-<button
-	class="{current === 'foo' ? 'active' : ''}"
-	on:click="{() => current = 'foo'}"
->foo</button>
-
-<button
-	class="{current === 'bar' ? 'active' : ''}"
-	on:click="{() => current = 'bar'}"
->bar</button>
-
-<button
-	class="{current === 'baz' ? 'active' : ''}"
-	on:click="{() => current = 'baz'}"
->baz</button>
-	</section>
+<div id="Examples">
+		<Example />
+</div>

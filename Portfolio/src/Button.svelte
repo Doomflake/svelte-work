@@ -1,5 +1,5 @@
 <script>
-    import {current} from "./App.svelte";
+   
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();

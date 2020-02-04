@@ -20,7 +20,8 @@ const homepara1 = {
 <style>
 
 </style>
-
+<div>
 <Para head={homepara1.head} text={homepara1.text} />
 	<Imag link={homeimage1.link} alttext={homeimage1.alttext} />
 	<Para head={homepara2.head} text={homepara2.text} />
+</div>
