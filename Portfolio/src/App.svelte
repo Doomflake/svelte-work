@@ -3,7 +3,7 @@
 LogRocket.init('xz0riz/svelte_profile_dev');
 	import Button from './Button.svelte';
 	import Cart from "./Cart.svelte";
-	import Navbar from "./Navbar.svelte";
+	import Navbutton from "./Navbutton.svelte";
 	import Para from "./Paragraph.svelte";
 	import Imag from "./image.svelte";
 	import Homepage from "./Homepage.svelte";
@@ -11,9 +11,11 @@ LogRocket.init('xz0riz/svelte_profile_dev');
 	import Contact from "./Contact.svelte";
 	import About from "./About.svelte";
 	
-	function handleClick() {
-		alert('clicked')
-	}
+	import { createEventDispatcher } from 'svelte';
+	let current = "Homepage"
+	const dispatch = createEventDispatcher();
+	let active = false;
+	
 </script>
 
 <style>
@@ -21,49 +23,46 @@ LogRocket.init('xz0riz/svelte_profile_dev');
 	section {
 		width: 100%;
 		margin: auto;
-	}	
-	#Frontpage {
+	}
+	div {
+    margin: auto;
+    width: 100%;
+    overflow: hidden;
+}		
+	button {
+    display: block;
+}
+
+	.active {
 		display: block;
 	}
-	#Aboutme {
+	.hidden {
 		display: none;
 	}
-	/*.aboutimage {
-		margin: auto;
-    	width: 50%;
-    	max-width: 300px;
-    	height: 50%;
-    	max-height: 300px;
-		padding-bottom: 1.5em;
-	} */
-	#contactform {
-		display: none;
-	}
-	#Examples {
-		display: none;
-	}	
-	
-	
 </style>
 
 <section>
-	<Navbar on:click={handleClick} class="{current === 'foo' ? 'active' : ''}"
-	on:click="{() => current = 'foo'}"/>	
+	<div>
+<Navbutton on:click="{() => current = 'Frontpage'}">Home</Navbutton>
+<Navbutton on:click="{() => current = 'Aboutme'}">About</Navbutton>
+<Navbutton on:click="{() => current = 'Contactform'}" >Contact</Navbutton>
+<Navbutton on:click="{() => current = 'Examples'}">Examples</Navbutton>
+</div>	
 	</section>
-	
+
 	<hr>
-	<section id='Frontpage'>
+	<section id='Frontpage' class="{current === "Frontpage" ? "active" : "hidden"}">
 	<Homepage />
 	</section>
 
-<div id='Aboutme'>
+<div id='Aboutme' class="{current === "Aboutme" ? "active" : "hidden"}">
 	<About />
 </div>
 
-<div id="contactform">
+<div id="contactform" class="{current === "Contactform" ? "active" : "hidden"}">
 	<Contact />
 </div>
 
-<div id="Examples">
+<div id="Examples" class="{current === "Examples" ? "active" : "hidden"}">
 		<Example />
 </div>

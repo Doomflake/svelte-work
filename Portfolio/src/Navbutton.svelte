@@ -4,12 +4,6 @@
     
 	const dispatch = createEventDispatcher();
 
-/*	function navhandler() {
-		dispatch('message', {
-			text: {current}
-		});
-	}
-*/
 </script>
 <style>
 button {
@@ -26,7 +20,7 @@ button {
 
 </style>
 
-<button on:click >
+<button on:click class="">
 <slot />
 </button> 
 
