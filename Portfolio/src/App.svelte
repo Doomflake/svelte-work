@@ -10,12 +10,29 @@ LogRocket.init('xz0riz/svelte_profile_dev');
 	import Example from "./Examples.svelte";
 	import Contact from "./Contact.svelte";
 	import About from "./About.svelte";
-	
+	import {fade} from 'svelte/transition';
+	import {fly} from 'svelte/transition';
+	import { tweened } from 'svelte/motion';	
+	import { cubicOut } from 'svelte/easing';
+	const progress = tweened(0, {
+		duration: 400,
+		easing: cubicOut
+	});
 	import { createEventDispatcher } from 'svelte';
-	let current = "Homepage"
+	let current = 'Frontpage'
 	const dispatch = createEventDispatcher();
 	let active = false;
-	
+
+/* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+	x.className = "topnav";
+	x.className -= " responsive";
+  }
+} 
 </script>
 
 <style>
@@ -29,40 +46,110 @@ LogRocket.init('xz0riz/svelte_profile_dev');
     width: 100%;
     overflow: hidden;
 }		
-	button {
-    display: block;
+ /* Add a black background color to the top navigation */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
 }
 
-	.active {
-		display: block;
-	}
-	.hidden {
-		display: none;
-	}
-</style>
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
 
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add an active class to highlight the current page */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+  display: none;
+} 
+ /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+} 	
+
+
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <section>
-	<div>
-<Navbutton on:click="{() => current = 'Frontpage'}">Home</Navbutton>
-<Navbutton on:click="{() => current = 'Aboutme'}">About</Navbutton>
-<Navbutton on:click="{() => current = 'Contactform'}" >Contact</Navbutton>
-<Navbutton on:click="{() => current = 'Examples'}">Examples</Navbutton>
+<div class="topnav" id="myTopnav">
+  <a href="#Frontpage" class="active" on:click="{() => current = 'Frontpage'}">Home</a>
+  <a href="#Examples" on:click="{() => current = 'Examples'}">Examples</a>
+  <a href="#Contactform" on:click="{() => current = 'Contactform'}" >Contact</a>
+  <a href="#Aboutme" on:click="{() => current = 'Aboutme'}">About</a>
+  <a href="javascript:void(0);" class="icon" on:click={myFunction}>
+    <i class="fa fa-bars"></i>
+  </a>
 </div>	
 	</section>
 
 	<hr>
-	<section id='Frontpage' class="{current === "Frontpage" ? "active" : "hidden"}">
+	<section id='Frontpage'>
+	{#if current === 'Frontpage'}
+	<div in:fly="{{x:200, duration:3000}}" out:fly="{{x:400, duration:500}}">
 	<Homepage />
+	</div>
+	{/if}
 	</section>
 
-<div id='Aboutme' class="{current === "Aboutme" ? "active" : "hidden"}">
+<div id='Aboutme'>
+{#if current === "Aboutme"}
+	<div in:fly="{{y:200, duration:2500}}" out:fly="{{y:400, duration:500}}">
 	<About />
+	</div>
+	{/if}
+	
 </div>
 
-<div id="contactform" class="{current === "Contactform" ? "active" : "hidden"}">
-	<Contact />
+<div id="contactform">
+{#if current === "Contactform"}
+	<div in:fly="{{y:-200, duration:2000}}" out:fly="{{y:-200, duration:3000}}">
+<Contact />
+	</div>
+	{/if}
+	
 </div>
 
-<div id="Examples" class="{current === "Examples" ? "active" : "hidden"}">
-		<Example />
+<div id="Examples">
+	{#if current === "Examples"}
+	<div in:fly="{{x:-200, duration:3000}}" out:fly="{{x:-200, duration:3000}}">
+	<Example />
+	</div>
+	{/if}
 </div>
