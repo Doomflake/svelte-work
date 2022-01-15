@@ -21,7 +21,7 @@
     "flru": "^1.0.2",
     "httpie": "^1.1.2",
     "jsonwebtoken": "^8.5.1",
-    "marked": "^0.7.0",
+    "marked": "^4.0.10",
     "pg": "^7.12.0",
     "polka": "^1.0.0-next.4",
     "prismjs": "^1.17.1",
