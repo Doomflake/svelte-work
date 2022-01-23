@@ -58,15 +58,15 @@
   "devDependencies": {
     "@types/mocha": "^5.2.7",
     "@types/node": "=8",
-    "@typescript-eslint/eslint-plugin": "^1.11.0",
-    "@typescript-eslint/parser": "^1.11.0",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
     "acorn": "^6.2.0",
     "acorn-dynamic-import": "^4.0.0",
     "agadoo": "^1.0.1",
     "c8": "^5.0.1",
     "codecov": "^3.5.0",
     "css-tree": "1.0.0-alpha22",
-    "eslint": "^6.1.0",
+    "eslint": "^8.6.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-svelte3": "^2.6.0",
     "estree-walker": "^0.6.1",
@@ -98,5 +98,9 @@
     ],
     "sourceMap": true,
     "instrument": true
+  },
+  "dependencies": {
+    "svelte": "^3.45.0",
+    "svelte-kit": "^1.0.0"
   }
 }
