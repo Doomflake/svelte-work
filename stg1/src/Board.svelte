@@ -18,7 +18,7 @@
     if (!squares[i]) {
       squares[i] = xIsNext ? "X" : "0";
       xIsNext = !xIsNext;
-      winning = calculateWinner(squares)
+      winner = calculateWinner(squares)
       if (winning = X) {
         winner = "Jacob"}
         else {winner = "Dad"};
