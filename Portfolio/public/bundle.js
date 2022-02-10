@@ -5,6 +5,12 @@ var app = (function () {
 
     function noop() { }
     const identity = x => x;
+    function assign(tar, src) {
+        // @ts-ignore
+        for (const k in src)
+            tar[k] = src[k];
+        return tar;
+    }
     function add_location(element, file, line, column, char) {
         element.__svelte_meta = {
             loc: { file, line, column, char }
@@ -24,6 +30,22 @@ var app = (function () {
     }
     function safe_not_equal(a, b) {
         return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
+    }
+    function create_slot(definition, ctx, fn) {
+        if (definition) {
+            const slot_ctx = get_slot_context(definition, ctx, fn);
+            return definition[0](slot_ctx);
+        }
+    }
+    function get_slot_context(definition, ctx, fn) {
+        return definition[1]
+            ? assign({}, assign(ctx.$$scope.ctx, definition[1](fn ? fn(ctx) : {})))
+            : ctx.$$scope.ctx;
+    }
+    function get_slot_changes(definition, ctx, changed, fn) {
+        return definition[1]
+            ? assign({}, assign(ctx.$$scope.changed || {}, definition[1](fn ? fn(changed) : {})))
+            : ctx.$$scope.changed || {};
     }
 
     const is_client = typeof window !== 'undefined';
@@ -3364,7 +3386,10 @@ var app = (function () {
     const file = "src\\Paragraph.svelte";
 
     function create_fragment(ctx) {
-    	var h2, t0, t1, p, t2;
+    	var h2, t0, t1, p, t2, t3, current;
+
+    	const default_slot_template = ctx.$$slots.default;
+    	const default_slot = create_slot(default_slot_template, ctx, null);
 
     	const block = {
     		c: function create() {
@@ -3373,13 +3398,18 @@ var app = (function () {
     			t1 = space();
     			p = element("p");
     			t2 = text(ctx.text);
-    			attr_dev(h2, "class", "svelte-10i5qe4");
-    			add_location(h2, file, 13, 0, 176);
-    			attr_dev(p, "class", "svelte-10i5qe4");
-    			add_location(p, file, 17, 0, 199);
+    			t3 = space();
+
+    			if (default_slot) default_slot.c();
+    			attr_dev(h2, "class", "svelte-107fw07");
+    			add_location(h2, file, 15, 0, 184);
+
+    			attr_dev(p, "class", "svelte-107fw07");
+    			add_location(p, file, 19, 0, 207);
     		},
 
     		l: function claim(nodes) {
+    			if (default_slot) default_slot.l(p_nodes);
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
 
@@ -3389,20 +3419,42 @@ var app = (function () {
     			insert_dev(target, t1, anchor);
     			insert_dev(target, p, anchor);
     			append_dev(p, t2);
+    			append_dev(p, t3);
+
+    			if (default_slot) {
+    				default_slot.m(p, null);
+    			}
+
+    			current = true;
     		},
 
     		p: function update(changed, ctx) {
-    			if (changed.head) {
+    			if (!current || changed.head) {
     				set_data_dev(t0, ctx.head);
     			}
 
-    			if (changed.text) {
+    			if (!current || changed.text) {
     				set_data_dev(t2, ctx.text);
+    			}
+
+    			if (default_slot && default_slot.p && changed.$$scope) {
+    				default_slot.p(
+    					get_slot_changes(default_slot_template, ctx, changed, null),
+    					get_slot_context(default_slot_template, ctx, null)
+    				);
     			}
     		},
 
-    		i: noop,
-    		o: noop,
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(default_slot, local);
+    			current = true;
+    		},
+
+    		o: function outro(local) {
+    			transition_out(default_slot, local);
+    			current = false;
+    		},
 
     		d: function destroy(detaching) {
     			if (detaching) {
@@ -3410,6 +3462,8 @@ var app = (function () {
     				detach_dev(t1);
     				detach_dev(p);
     			}
+
+    			if (default_slot) default_slot.d(detaching);
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment.name, type: "component", source: "", ctx });
@@ -3424,9 +3478,12 @@ var app = (function () {
     		if (!writable_props.includes(key) && !key.startsWith('$$')) console.warn(`<Paragraph> was created with unknown prop '${key}'`);
     	});
 
+    	let { $$slots = {}, $$scope } = $$props;
+
     	$$self.$set = $$props => {
     		if ('head' in $$props) $$invalidate('head', head = $$props.head);
     		if ('text' in $$props) $$invalidate('text', text = $$props.text);
+    		if ('$$scope' in $$props) $$invalidate('$$scope', $$scope = $$props.$$scope);
     	};
 
     	$$self.$capture_state = () => {
@@ -3438,7 +3495,7 @@ var app = (function () {
     		if ('text' in $$props) $$invalidate('text', text = $$props.text);
     	};
 
-    	return { head, text };
+    	return { head, text, $$slots, $$scope };
     }
 
     class Paragraph extends SvelteComponentDev {
@@ -3584,7 +3641,7 @@ var app = (function () {
     const file$2 = "src\\Homepage.svelte";
 
     function create_fragment$2(ctx) {
-    	var div, t0, t1, current;
+    	var section, t0, p0, strong0, t2, t3, p1, strong1, t5, t6, p2, strong2, t8, t9, p3, strong3, t11, t12, p4, strong4, t14, t15, t16, current;
 
     	var para0 = new Paragraph({
     		props: { head: ctx.homepara1.head, text: ctx.homepara1.text },
@@ -3592,7 +3649,10 @@ var app = (function () {
     	});
 
     	var imag = new Image({
-    		props: { link: ctx.homeimage1.link, alttext: ctx.homeimage1.alttext },
+    		props: {
+    		link: ctx.homeimage1.link,
+    		alttext: ctx.homeimage1.alttext
+    	},
     		$$inline: true
     	});
 
@@ -3603,13 +3663,54 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			div = element("div");
+    			section = element("section");
     			para0.$$.fragment.c();
     			t0 = space();
+    			p0 = element("p");
+    			strong0 = element("strong");
+    			strong0.textContent = "9 out of 10 ";
+    			t2 = text("Consumers will use the internet to find you, while 88% of small businesses will say it makes it easier for customers to find them");
+    			t3 = space();
+    			p1 = element("p");
+    			strong1 = element("strong");
+    			strong1.textContent = "84% ";
+    			t5 = text("of Consumers believe a business with a website is more credible than a business with only a social media page");
+    			t6 = space();
+    			p2 = element("p");
+    			strong2 = element("strong");
+    			strong2.textContent = "77%";
+    			t8 = text(" of Small Businesses feel a website is an easier way to find customers");
+    			t9 = space();
+    			p3 = element("p");
+    			strong3 = element("strong");
+    			strong3.textContent = "81% ";
+    			t11 = text("of Small Businesses believe a website has helped to grow their business");
+    			t12 = space();
+    			p4 = element("p");
+    			strong4 = element("strong");
+    			strong4.textContent = "92%";
+    			t14 = text(" of Consumers prefer to get information from a business's website over a social media page");
+    			t15 = space();
     			imag.$$.fragment.c();
-    			t1 = space();
+    			t16 = space();
     			para1.$$.fragment.c();
-    			add_location(div, file$2, 22, 0, 579);
+    			add_location(strong0, file$2, 33, 4, 867);
+    			attr_dev(p0, "class", "svelte-16vux3");
+    			add_location(p0, file$2, 33, 1, 864);
+    			add_location(strong1, file$2, 34, 4, 1035);
+    			attr_dev(p1, "class", "svelte-16vux3");
+    			add_location(p1, file$2, 34, 1, 1032);
+    			add_location(strong2, file$2, 35, 4, 1175);
+    			attr_dev(p2, "class", "svelte-16vux3");
+    			add_location(p2, file$2, 35, 1, 1172);
+    			add_location(strong3, file$2, 36, 4, 1275);
+    			attr_dev(p3, "class", "svelte-16vux3");
+    			add_location(p3, file$2, 36, 1, 1272);
+    			add_location(strong4, file$2, 37, 4, 1377);
+    			attr_dev(p4, "class", "svelte-16vux3");
+    			add_location(p4, file$2, 37, 1, 1374);
+    			attr_dev(section, "class", "svelte-16vux3");
+    			add_location(section, file$2, 31, 0, 796);
     		},
 
     		l: function claim(nodes) {
@@ -3617,12 +3718,32 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
-    			mount_component(para0, div, null);
-    			append_dev(div, t0);
-    			mount_component(imag, div, null);
-    			append_dev(div, t1);
-    			mount_component(para1, div, null);
+    			insert_dev(target, section, anchor);
+    			mount_component(para0, section, null);
+    			append_dev(section, t0);
+    			append_dev(section, p0);
+    			append_dev(p0, strong0);
+    			append_dev(p0, t2);
+    			append_dev(section, t3);
+    			append_dev(section, p1);
+    			append_dev(p1, strong1);
+    			append_dev(p1, t5);
+    			append_dev(section, t6);
+    			append_dev(section, p2);
+    			append_dev(p2, strong2);
+    			append_dev(p2, t8);
+    			append_dev(section, t9);
+    			append_dev(section, p3);
+    			append_dev(p3, strong3);
+    			append_dev(p3, t11);
+    			append_dev(section, t12);
+    			append_dev(section, p4);
+    			append_dev(p4, strong4);
+    			append_dev(p4, t14);
+    			append_dev(section, t15);
+    			mount_component(imag, section, null);
+    			append_dev(section, t16);
+    			mount_component(para1, section, null);
     			current = true;
     		},
 
@@ -3648,7 +3769,7 @@ var app = (function () {
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach_dev(div);
+    				detach_dev(section);
     			}
 
     			destroy_component(para0);
@@ -3666,8 +3787,9 @@ var app = (function () {
     	
 
     const homepara1 = {
-    		head: 'Some Info about Websites',
-    		text: 'This is some handy information about websites',
+    		head: '5 Reasons you need a website',
+    		text: 'Based on a 2015 study by Verisign¹, here are the top 5 reasons a website is needed for your business.',
+    		list: 'item1'
     	};
     	const homeimage1 = {
     		link: 'https://images.unsplash.com/photo-1530435460869-d13625c69bbf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
@@ -3700,7 +3822,7 @@ var app = (function () {
     const file$3 = "src\\Examples.svelte";
 
     function create_fragment$3(ctx) {
-    	var p0, span0, t0, a0, t2, a1, t4, a2, t6, t7, script0, t8, t9, p1, span1, t10, a3, t12, a4, t14, a5, t16, t17, script1, t18, current;
+    	var section, p0, span0, t0, a0, t2, a1, t4, a2, t6, t7, script0, t8, t9, p1, span1, t10, a3, t12, a4, t14, a5, t16, t17, script1, t18, current;
 
     	var para0 = new Paragraph({
     		props: { head: ctx.examplepara1.head, text: ctx.examplepara1.text },
@@ -3714,6 +3836,7 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
+    			section = element("section");
     			p0 = element("p");
     			span0 = element("span");
     			t0 = text("See the Pen ");
@@ -3748,15 +3871,15 @@ var app = (function () {
     			t18 = space();
     			para1.$$.fragment.c();
     			attr_dev(a0, "href", "https://codepen.io/dewain38/pen/rPPLNz");
-    			add_location(a0, file$3, 26, 20, 1120);
+    			add_location(a0, file$3, 28, 20, 1205);
     			attr_dev(a1, "href", "https://codepen.io/dewain38");
-    			add_location(a1, file$3, 27, 43, 1214);
+    			add_location(a1, file$3, 29, 43, 1299);
     			attr_dev(a2, "href", "https://codepen.io");
-    			add_location(a2, file$3, 28, 5, 1273);
-    			add_location(span0, file$3, 26, 2, 1102);
+    			add_location(a2, file$3, 30, 5, 1358);
+    			add_location(span0, file$3, 28, 2, 1187);
     			script0.async = true;
     			attr_dev(script0, "src", "https://static.codepen.io/assets/embed/ei.js");
-    			add_location(script0, file$3, 30, 0, 1325);
+    			add_location(script0, file$3, 32, 0, 1410);
     			attr_dev(p0, "class", "codepen");
     			attr_dev(p0, "data-height", "265");
     			attr_dev(p0, "data-theme-id", "dark");
@@ -3773,17 +3896,17 @@ var app = (function () {
     			set_style(p0, "margin", "1em 0");
     			set_style(p0, "padding", "1em");
     			attr_dev(p0, "data-pen-title", "Responsive Product Landing");
-    			add_location(p0, file$3, 25, 0, 749);
+    			add_location(p0, file$3, 27, 0, 834);
     			attr_dev(a3, "href", "https://codepen.io/dewain38/pen/ZKmXmN");
-    			add_location(a3, file$3, 35, 20, 1831);
+    			add_location(a3, file$3, 37, 20, 1916);
     			attr_dev(a4, "href", "https://codepen.io/dewain38");
-    			add_location(a4, file$3, 36, 34, 1916);
+    			add_location(a4, file$3, 38, 34, 2001);
     			attr_dev(a5, "href", "https://codepen.io");
-    			add_location(a5, file$3, 37, 5, 1975);
-    			add_location(span1, file$3, 35, 2, 1813);
+    			add_location(a5, file$3, 39, 5, 2060);
+    			add_location(span1, file$3, 37, 2, 1898);
     			script1.async = true;
     			attr_dev(script1, "src", "https://static.codepen.io/assets/embed/ei.js");
-    			add_location(script1, file$3, 39, 0, 2027);
+    			add_location(script1, file$3, 41, 0, 2112);
     			attr_dev(p1, "class", "codepen");
     			attr_dev(p1, "data-height", "344");
     			attr_dev(p1, "data-theme-id", "dark");
@@ -3800,7 +3923,9 @@ var app = (function () {
     			set_style(p1, "margin", "1em 0");
     			set_style(p1, "padding", "1em");
     			attr_dev(p1, "data-pen-title", "Local weather app");
-    			add_location(p1, file$3, 34, 0, 1469);
+    			add_location(p1, file$3, 36, 0, 1554);
+    			attr_dev(section, "class", "svelte-7a2125");
+    			add_location(section, file$3, 26, 0, 823);
     		},
 
     		l: function claim(nodes) {
@@ -3808,7 +3933,8 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			insert_dev(target, p0, anchor);
+    			insert_dev(target, section, anchor);
+    			append_dev(section, p0);
     			append_dev(p0, span0);
     			append_dev(span0, t0);
     			append_dev(span0, a0);
@@ -3819,10 +3945,10 @@ var app = (function () {
     			append_dev(span0, t6);
     			append_dev(p0, t7);
     			append_dev(p0, script0);
-    			insert_dev(target, t8, anchor);
-    			mount_component(para0, target, anchor);
-    			insert_dev(target, t9, anchor);
-    			insert_dev(target, p1, anchor);
+    			append_dev(section, t8);
+    			mount_component(para0, section, null);
+    			append_dev(section, t9);
+    			append_dev(section, p1);
     			append_dev(p1, span1);
     			append_dev(span1, t10);
     			append_dev(span1, a3);
@@ -3833,8 +3959,8 @@ var app = (function () {
     			append_dev(span1, t16);
     			append_dev(p1, t17);
     			append_dev(p1, script1);
-    			insert_dev(target, t18, anchor);
-    			mount_component(para1, target, anchor);
+    			append_dev(section, t18);
+    			mount_component(para1, section, null);
     			current = true;
     		},
 
@@ -3857,19 +3983,12 @@ var app = (function () {
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach_dev(p0);
-    				detach_dev(t8);
+    				detach_dev(section);
     			}
 
-    			destroy_component(para0, detaching);
+    			destroy_component(para0);
 
-    			if (detaching) {
-    				detach_dev(t9);
-    				detach_dev(p1);
-    				detach_dev(t18);
-    			}
-
-    			destroy_component(para1, detaching);
+    			destroy_component(para1);
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$3.name, type: "component", source: "", ctx });
@@ -3908,7 +4027,7 @@ var app = (function () {
     const file$4 = "src\\Contact.svelte";
 
     function create_fragment$4(ctx) {
-    	var t, iframe, current;
+    	var section, t, iframe, current;
 
     	var para = new Paragraph({
     		props: { head: ctx.contactpara1.head, text: ctx.contactpara1.text },
@@ -3917,6 +4036,7 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
+    			section = element("section");
     			para.$$.fragment.c();
     			t = space();
     			iframe = element("iframe");
@@ -3928,7 +4048,9 @@ var app = (function () {
     			attr_dev(iframe, "frameborder", "0");
     			attr_dev(iframe, "marginheight", "0");
     			attr_dev(iframe, "marginwidth", "0");
-    			add_location(iframe, file$4, 18, 1, 425);
+    			add_location(iframe, file$4, 20, 1, 510);
+    			attr_dev(section, "class", "svelte-1pofpxk");
+    			add_location(section, file$4, 18, 0, 438);
     		},
 
     		l: function claim(nodes) {
@@ -3936,9 +4058,10 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			mount_component(para, target, anchor);
-    			insert_dev(target, t, anchor);
-    			insert_dev(target, iframe, anchor);
+    			insert_dev(target, section, anchor);
+    			mount_component(para, section, null);
+    			append_dev(section, t);
+    			append_dev(section, iframe);
     			current = true;
     		},
 
@@ -3957,12 +4080,11 @@ var app = (function () {
     		},
 
     		d: function destroy(detaching) {
-    			destroy_component(para, detaching);
-
     			if (detaching) {
-    				detach_dev(t);
-    				detach_dev(iframe);
+    				detach_dev(section);
     			}
+
+    			destroy_component(para);
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$4.name, type: "component", source: "", ctx });
@@ -4000,7 +4122,7 @@ var app = (function () {
     const file$5 = "src\\About.svelte";
 
     function create_fragment$5(ctx) {
-    	var div0, t0, div1, t1, div2, t2, current;
+    	var section, div0, t0, div1, t1, div2, t2, current;
 
     	var imag0 = new Image({
     		props: {
@@ -4030,6 +4152,7 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
+    			section = element("section");
     			div0 = element("div");
     			imag0.$$.fragment.c();
     			t0 = space();
@@ -4041,10 +4164,12 @@ var app = (function () {
     			t2 = space();
     			para1.$$.fragment.c();
     			attr_dev(div0, "class", "aboutimage");
-    			add_location(div0, file$5, 28, 0, 1480);
-    			add_location(div1, file$5, 31, 1, 1582);
+    			add_location(div0, file$5, 31, 0, 1567);
+    			add_location(div1, file$5, 34, 1, 1669);
     			attr_dev(div2, "class", "aboutimage");
-    			add_location(div2, file$5, 34, 1, 1656);
+    			add_location(div2, file$5, 37, 1, 1743);
+    			attr_dev(section, "class", "svelte-inxxse");
+    			add_location(section, file$5, 30, 0, 1556);
     		},
 
     		l: function claim(nodes) {
@@ -4052,16 +4177,17 @@ var app = (function () {
     		},
 
     		m: function mount(target, anchor) {
-    			insert_dev(target, div0, anchor);
+    			insert_dev(target, section, anchor);
+    			append_dev(section, div0);
     			mount_component(imag0, div0, null);
-    			insert_dev(target, t0, anchor);
-    			insert_dev(target, div1, anchor);
+    			append_dev(section, t0);
+    			append_dev(section, div1);
     			mount_component(para0, div1, null);
-    			insert_dev(target, t1, anchor);
-    			insert_dev(target, div2, anchor);
+    			append_dev(section, t1);
+    			append_dev(section, div2);
     			mount_component(imag1, div2, null);
-    			insert_dev(target, t2, anchor);
-    			mount_component(para1, target, anchor);
+    			append_dev(section, t2);
+    			mount_component(para1, section, null);
     			current = true;
     		},
 
@@ -4090,30 +4216,16 @@ var app = (function () {
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach_dev(div0);
+    				detach_dev(section);
     			}
 
     			destroy_component(imag0);
 
-    			if (detaching) {
-    				detach_dev(t0);
-    				detach_dev(div1);
-    			}
-
     			destroy_component(para0);
-
-    			if (detaching) {
-    				detach_dev(t1);
-    				detach_dev(div2);
-    			}
 
     			destroy_component(imag1);
 
-    			if (detaching) {
-    				detach_dev(t2);
-    			}
-
-    			destroy_component(para1, detaching);
+    			destroy_component(para1);
     		}
     	};
     	dispatch_dev("SvelteRegisterBlock", { block, id: create_fragment$5.name, type: "component", source: "", ctx });
@@ -4186,9 +4298,9 @@ var app = (function () {
 
     const file$6 = "src\\App.svelte";
 
-    // (124:1) {#if current === 'Frontpage'}
+    // (128:1) {#if current === 'Frontpage'}
     function create_if_block_3(ctx) {
-    	var div, div_intro, div_outro, current_1;
+    	var div, t0, footer, t1, a, div_intro, div_outro, current_1;
 
     	var homepage = new Homepage({ $$inline: true });
 
@@ -4196,13 +4308,27 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			homepage.$$.fragment.c();
-    			attr_dev(div, "class", "svelte-1xyoqbe");
-    			add_location(div, file$6, 124, 1, 3601);
+    			t0 = space();
+    			footer = element("footer");
+    			t1 = text("¹ ");
+    			a = element("a");
+    			a.textContent = "5 Reasons Your Small Business Needs a Website";
+    			attr_dev(a, "href", "https://core.score.org/resources/infographic-5-reasons-your-small-business-needs-website");
+    			attr_dev(a, "target", "blank");
+    			add_location(a, file$6, 130, 11, 3757);
+    			attr_dev(footer, "class", "svelte-13gawju");
+    			add_location(footer, file$6, 130, 1, 3747);
+    			attr_dev(div, "class", "svelte-13gawju");
+    			add_location(div, file$6, 128, 1, 3656);
     		},
 
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
     			mount_component(homepage, div, null);
+    			append_dev(div, t0);
+    			append_dev(div, footer);
+    			append_dev(footer, t1);
+    			append_dev(footer, a);
     			current_1 = true;
     		},
 
@@ -4240,11 +4366,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_3.name, type: "if", source: "(124:1) {#if current === 'Frontpage'}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_3.name, type: "if", source: "(128:1) {#if current === 'Frontpage'}", ctx });
     	return block;
     }
 
-    // (132:0) {#if current === "Aboutme"}
+    // (137:0) {#if current === "Aboutme"}
     function create_if_block_2(ctx) {
     	var div, div_intro, div_outro, current_1;
 
@@ -4254,8 +4380,8 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			about.$$.fragment.c();
-    			attr_dev(div, "class", "svelte-1xyoqbe");
-    			add_location(div, file$6, 132, 1, 3773);
+    			attr_dev(div, "class", "svelte-13gawju");
+    			add_location(div, file$6, 137, 1, 4013);
     		},
 
     		m: function mount(target, anchor) {
@@ -4270,7 +4396,7 @@ var app = (function () {
 
     			add_render_callback(() => {
     				if (div_outro) div_outro.end(1);
-    				if (!div_intro) div_intro = create_in_transition(div, fly, {y:200, duration:2500});
+    				if (!div_intro) div_intro = create_in_transition(div, fly, {y:100, duration:2500});
     				div_intro.start();
     			});
 
@@ -4298,11 +4424,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2.name, type: "if", source: "(132:0) {#if current === \"Aboutme\"}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2.name, type: "if", source: "(137:0) {#if current === \"Aboutme\"}", ctx });
     	return block;
     }
 
-    // (141:0) {#if current === "Contactform"}
+    // (146:0) {#if current === "Contactform"}
     function create_if_block_1(ctx) {
     	var div, div_intro, div_outro, current_1;
 
@@ -4312,8 +4438,8 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			contact.$$.fragment.c();
-    			attr_dev(div, "class", "svelte-1xyoqbe");
-    			add_location(div, file$6, 141, 1, 3948);
+    			attr_dev(div, "class", "svelte-13gawju");
+    			add_location(div, file$6, 146, 1, 4188);
     		},
 
     		m: function mount(target, anchor) {
@@ -4356,11 +4482,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(141:0) {#if current === \"Contactform\"}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(146:0) {#if current === \"Contactform\"}", ctx });
     	return block;
     }
 
-    // (150:1) {#if current === "Examples"}
+    // (155:1) {#if current === "Examples"}
     function create_if_block(ctx) {
     	var div, div_intro, div_outro, current_1;
 
@@ -4370,8 +4496,8 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			example.$$.fragment.c();
-    			attr_dev(div, "class", "svelte-1xyoqbe");
-    			add_location(div, file$6, 150, 1, 4122);
+    			attr_dev(div, "class", "svelte-13gawju");
+    			add_location(div, file$6, 155, 1, 4362);
     		},
 
     		m: function mount(target, anchor) {
@@ -4414,7 +4540,7 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block.name, type: "if", source: "(150:1) {#if current === \"Examples\"}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block.name, type: "if", source: "(155:1) {#if current === \"Examples\"}", ctx });
     	return block;
     }
 
@@ -4467,45 +4593,45 @@ var app = (function () {
     			if (if_block3) if_block3.c();
     			attr_dev(meta, "name", "viewport");
     			attr_dev(meta, "content", "width=device-width, initial-scale=1");
-    			add_location(meta, file$6, 107, 0, 2849);
+    			add_location(meta, file$6, 111, 0, 2904);
     			attr_dev(link, "rel", "stylesheet");
     			attr_dev(link, "href", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
-    			add_location(link, file$6, 108, 0, 2921);
+    			add_location(link, file$6, 112, 0, 2976);
     			attr_dev(a0, "href", "#Frontpage");
-    			attr_dev(a0, "class", "active svelte-1xyoqbe");
-    			add_location(a0, file$6, 111, 2, 3085);
+    			attr_dev(a0, "class", "active svelte-13gawju");
+    			add_location(a0, file$6, 115, 2, 3140);
     			attr_dev(a1, "href", "#Examples");
-    			attr_dev(a1, "class", "svelte-1xyoqbe");
-    			add_location(a1, file$6, 112, 2, 3174);
+    			attr_dev(a1, "class", "svelte-13gawju");
+    			add_location(a1, file$6, 116, 2, 3229);
     			attr_dev(a2, "href", "#Contactform");
-    			attr_dev(a2, "class", "svelte-1xyoqbe");
-    			add_location(a2, file$6, 113, 2, 3250);
+    			attr_dev(a2, "class", "svelte-13gawju");
+    			add_location(a2, file$6, 117, 2, 3305);
     			attr_dev(a3, "href", "#Aboutme");
-    			attr_dev(a3, "class", "svelte-1xyoqbe");
-    			add_location(a3, file$6, 114, 2, 3332);
+    			attr_dev(a3, "class", "svelte-13gawju");
+    			add_location(a3, file$6, 118, 2, 3387);
     			attr_dev(i, "class", "fa fa-bars");
-    			add_location(i, file$6, 116, 4, 3474);
+    			add_location(i, file$6, 120, 4, 3529);
     			attr_dev(a4, "href", "javascript:void(0);");
-    			attr_dev(a4, "class", "icon svelte-1xyoqbe");
-    			add_location(a4, file$6, 115, 2, 3403);
-    			attr_dev(div0, "class", "topnav svelte-1xyoqbe");
+    			attr_dev(a4, "class", "icon svelte-13gawju");
+    			add_location(a4, file$6, 119, 2, 3458);
+    			attr_dev(div0, "class", "topnav svelte-13gawju");
     			attr_dev(div0, "id", "myTopnav");
-    			add_location(div0, file$6, 110, 0, 3047);
-    			attr_dev(section0, "class", "svelte-1xyoqbe");
-    			add_location(section0, file$6, 109, 0, 3036);
-    			add_location(hr, file$6, 121, 1, 3535);
+    			add_location(div0, file$6, 114, 0, 3102);
+    			attr_dev(section0, "class", "svelte-13gawju");
+    			add_location(section0, file$6, 113, 0, 3091);
+    			add_location(hr, file$6, 125, 1, 3590);
     			attr_dev(section1, "id", "Frontpage");
-    			attr_dev(section1, "class", "svelte-1xyoqbe");
-    			add_location(section1, file$6, 122, 1, 3542);
+    			attr_dev(section1, "class", "svelte-13gawju");
+    			add_location(section1, file$6, 126, 1, 3597);
     			attr_dev(div1, "id", "Aboutme");
-    			attr_dev(div1, "class", "svelte-1xyoqbe");
-    			add_location(div1, file$6, 130, 0, 3723);
+    			attr_dev(div1, "class", "svelte-13gawju");
+    			add_location(div1, file$6, 135, 0, 3963);
     			attr_dev(div2, "id", "contactform");
-    			attr_dev(div2, "class", "svelte-1xyoqbe");
-    			add_location(div2, file$6, 139, 0, 3890);
+    			attr_dev(div2, "class", "svelte-13gawju");
+    			add_location(div2, file$6, 144, 0, 4130);
     			attr_dev(div3, "id", "Examples");
-    			attr_dev(div3, "class", "svelte-1xyoqbe");
-    			add_location(div3, file$6, 148, 0, 4069);
+    			attr_dev(div3, "class", "svelte-13gawju");
+    			add_location(div3, file$6, 153, 0, 4309);
 
     			dispose = [
     				listen_dev(a0, "click", ctx.click_handler),

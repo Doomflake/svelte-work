@@ -45,7 +45,11 @@ function myFunction() {
     margin: auto;
     width: 100%;
     overflow: hidden;
-}		
+}	
+	footer {
+	font-size: .5em;
+	text-align: center;
+}	
  /* Add a black background color to the top navigation */
 .topnav {
   background-color: #333;
@@ -124,13 +128,14 @@ function myFunction() {
 	{#if current === 'Frontpage'}
 	<div in:fly="{{x:200, duration:3000}}" out:fly="{{x:400, duration:500}}">
 	<Homepage />
+	<footer>¹ <a href="https://core.score.org/resources/infographic-5-reasons-your-small-business-needs-website" target="blank">5 Reasons Your Small Business Needs a Website</a></footer>
 	</div>
 	{/if}
 	</section>
 
 <div id='Aboutme'>
 {#if current === "Aboutme"}
-	<div in:fly="{{y:200, duration:2500}}" out:fly="{{y:400, duration:500}}">
+	<div in:fly="{{y:100, duration:2500}}" out:fly="{{y:400, duration:500}}">
 	<About />
 	</div>
 	{/if}

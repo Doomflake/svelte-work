@@ -12,8 +12,11 @@
 </script>
 
 <style>
-
+section {
+	background: linear-gradient(180deg, #C2D1E8 25%,#2980b9 75%);
+}
 </style>
-
+<section>
 <Para head={contactpara1.head} text={contactpara1.text} />
 	<iframe title="contact" src="https://docs.google.com/forms/d/e/1FAIpQLSfKhpWL3FSlvs1bBvO7Ip9JLjAnR6BqhoaQQ_PmSycHEgH1ZA/viewform?embedded=true" width="100%" height="1073" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+</section>

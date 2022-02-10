@@ -22,10 +22,13 @@ const aboutpara1 = {
 	
 </script>
 
+
 <style>
-
+section {
+	background: linear-gradient(348deg, #C2D1E8 25%,#2980b9 75%);
+}
 </style>
-
+<section>
 <div class="aboutimage">
 	<Imag link={aboutimage1.link} alttext={aboutimage1.alttext} />	
 	</div>
@@ -36,3 +39,4 @@ const aboutpara1 = {
 	<Imag link={aboutimage2.link} alttext={aboutimage2.alttext} />
 	</div>
 	<Para head={aboutpara2.head} text={aboutpara2.text} />
+	</section>
