@@ -106,8 +106,21 @@ function myFunction() {
     text-align: left;
   }
 } 	
-
-
+button {
+  background-color: #4CAF50; /* Green */
+  border: .05em solid black;
+  color: white;
+  padding: .75em;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  font-size: 2em;
+  border-radius: 50%;
+  margin: auto;
+	}
+.front {
+	background: linear-gradient(142deg, #C2D1E8 25%,#2980b9 75%);
+}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -124,10 +137,11 @@ function myFunction() {
 	</section>
 
 	<hr>
-	<section id='Frontpage'>
+	<section id='Frontpage' class="front">
 	{#if current === 'Frontpage'}
 	<div in:fly="{{x:200, duration:3000}}" out:fly="{{x:400, duration:500}}">
-	<Homepage />
+		<button on:click="{() => current = 'Contactform'}" >Let's get you a website!</button>
+		<Homepage />
 	<footer>¹ <a href="https://core.score.org/resources/infographic-5-reasons-your-small-business-needs-website" target="blank">5 Reasons Your Small Business Needs a Website</a></footer>
 	</div>
 	{/if}

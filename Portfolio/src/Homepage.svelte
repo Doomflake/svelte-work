@@ -2,7 +2,7 @@
 
 	import Para from "./Paragraph.svelte";
 	import Imag from "./image.svelte";
-
+	
 const homepara1 = {
 		head: '5 Reasons you need a website',
 		text: 'Based on a 2015 study by Verisign¹, here are the top 5 reasons a website is needed for your business.',
@@ -19,15 +19,14 @@ const homepara1 = {
 </script>
 
 <style>
-section {
-	background: linear-gradient(142deg, #C2D1E8 25%,#2980b9 75%);
-}
+
 a {
 color: black;
 }
 p {
         text-align: center;
     }
+	
 </style>
 <section>
 	<Para head={homepara1.head} text={homepara1.text} /> 

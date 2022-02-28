@@ -3694,23 +3694,22 @@ var app = (function () {
     			imag.$$.fragment.c();
     			t16 = space();
     			para1.$$.fragment.c();
-    			add_location(strong0, file$2, 33, 4, 867);
-    			attr_dev(p0, "class", "svelte-16vux3");
-    			add_location(p0, file$2, 33, 1, 864);
-    			add_location(strong1, file$2, 34, 4, 1035);
-    			attr_dev(p1, "class", "svelte-16vux3");
-    			add_location(p1, file$2, 34, 1, 1032);
-    			add_location(strong2, file$2, 35, 4, 1175);
-    			attr_dev(p2, "class", "svelte-16vux3");
-    			add_location(p2, file$2, 35, 1, 1172);
-    			add_location(strong3, file$2, 36, 4, 1275);
-    			attr_dev(p3, "class", "svelte-16vux3");
-    			add_location(p3, file$2, 36, 1, 1272);
-    			add_location(strong4, file$2, 37, 4, 1377);
-    			attr_dev(p4, "class", "svelte-16vux3");
-    			add_location(p4, file$2, 37, 1, 1374);
-    			attr_dev(section, "class", "svelte-16vux3");
-    			add_location(section, file$2, 31, 0, 796);
+    			add_location(strong0, file$2, 32, 4, 795);
+    			attr_dev(p0, "class", "svelte-1eb7bvm");
+    			add_location(p0, file$2, 32, 1, 792);
+    			add_location(strong1, file$2, 33, 4, 963);
+    			attr_dev(p1, "class", "svelte-1eb7bvm");
+    			add_location(p1, file$2, 33, 1, 960);
+    			add_location(strong2, file$2, 34, 4, 1103);
+    			attr_dev(p2, "class", "svelte-1eb7bvm");
+    			add_location(p2, file$2, 34, 1, 1100);
+    			add_location(strong3, file$2, 35, 4, 1203);
+    			attr_dev(p3, "class", "svelte-1eb7bvm");
+    			add_location(p3, file$2, 35, 1, 1200);
+    			add_location(strong4, file$2, 36, 4, 1305);
+    			attr_dev(p4, "class", "svelte-1eb7bvm");
+    			add_location(p4, file$2, 36, 1, 1302);
+    			add_location(section, file$2, 30, 0, 724);
     		},
 
     		l: function claim(nodes) {
@@ -3785,7 +3784,7 @@ var app = (function () {
 
     function instance$2($$self) {
     	
-
+    	
     const homepara1 = {
     		head: '5 Reasons you need a website',
     		text: 'Based on a 2015 study by Verisign¹, here are the top 5 reasons a website is needed for your business.',
@@ -4298,36 +4297,44 @@ var app = (function () {
 
     const file$6 = "src\\App.svelte";
 
-    // (128:1) {#if current === 'Frontpage'}
+    // (141:1) {#if current === 'Frontpage'}
     function create_if_block_3(ctx) {
-    	var div, t0, footer, t1, a, div_intro, div_outro, current_1;
+    	var div, button, t1, t2, footer, t3, a, div_intro, div_outro, current_1, dispose;
 
     	var homepage = new Homepage({ $$inline: true });
 
     	const block = {
     		c: function create() {
     			div = element("div");
+    			button = element("button");
+    			button.textContent = "Let's get you a website!";
+    			t1 = space();
     			homepage.$$.fragment.c();
-    			t0 = space();
+    			t2 = space();
     			footer = element("footer");
-    			t1 = text("¹ ");
+    			t3 = text("¹ ");
     			a = element("a");
     			a.textContent = "5 Reasons Your Small Business Needs a Website";
+    			attr_dev(button, "class", "svelte-inau4s");
+    			add_location(button, file$6, 142, 2, 4068);
     			attr_dev(a, "href", "https://core.score.org/resources/infographic-5-reasons-your-small-business-needs-website");
     			attr_dev(a, "target", "blank");
-    			add_location(a, file$6, 130, 11, 3757);
-    			attr_dev(footer, "class", "svelte-13gawju");
-    			add_location(footer, file$6, 130, 1, 3747);
-    			attr_dev(div, "class", "svelte-13gawju");
-    			add_location(div, file$6, 128, 1, 3656);
+    			add_location(a, file$6, 144, 11, 4182);
+    			attr_dev(footer, "class", "svelte-inau4s");
+    			add_location(footer, file$6, 144, 1, 4172);
+    			attr_dev(div, "class", "svelte-inau4s");
+    			add_location(div, file$6, 141, 1, 3991);
+    			dispose = listen_dev(button, "click", ctx.click_handler_4);
     		},
 
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
+    			append_dev(div, button);
+    			append_dev(div, t1);
     			mount_component(homepage, div, null);
-    			append_dev(div, t0);
+    			append_dev(div, t2);
     			append_dev(div, footer);
-    			append_dev(footer, t1);
+    			append_dev(footer, t3);
     			append_dev(footer, a);
     			current_1 = true;
     		},
@@ -4364,13 +4371,15 @@ var app = (function () {
     			if (detaching) {
     				if (div_outro) div_outro.end();
     			}
+
+    			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_3.name, type: "if", source: "(128:1) {#if current === 'Frontpage'}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_3.name, type: "if", source: "(141:1) {#if current === 'Frontpage'}", ctx });
     	return block;
     }
 
-    // (137:0) {#if current === "Aboutme"}
+    // (151:0) {#if current === "Aboutme"}
     function create_if_block_2(ctx) {
     	var div, div_intro, div_outro, current_1;
 
@@ -4380,8 +4389,8 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			about.$$.fragment.c();
-    			attr_dev(div, "class", "svelte-13gawju");
-    			add_location(div, file$6, 137, 1, 4013);
+    			attr_dev(div, "class", "svelte-inau4s");
+    			add_location(div, file$6, 151, 1, 4438);
     		},
 
     		m: function mount(target, anchor) {
@@ -4424,11 +4433,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2.name, type: "if", source: "(137:0) {#if current === \"Aboutme\"}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2.name, type: "if", source: "(151:0) {#if current === \"Aboutme\"}", ctx });
     	return block;
     }
 
-    // (146:0) {#if current === "Contactform"}
+    // (160:0) {#if current === "Contactform"}
     function create_if_block_1(ctx) {
     	var div, div_intro, div_outro, current_1;
 
@@ -4438,8 +4447,8 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			contact.$$.fragment.c();
-    			attr_dev(div, "class", "svelte-13gawju");
-    			add_location(div, file$6, 146, 1, 4188);
+    			attr_dev(div, "class", "svelte-inau4s");
+    			add_location(div, file$6, 160, 1, 4613);
     		},
 
     		m: function mount(target, anchor) {
@@ -4482,11 +4491,11 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(146:0) {#if current === \"Contactform\"}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(160:0) {#if current === \"Contactform\"}", ctx });
     	return block;
     }
 
-    // (155:1) {#if current === "Examples"}
+    // (169:1) {#if current === "Examples"}
     function create_if_block(ctx) {
     	var div, div_intro, div_outro, current_1;
 
@@ -4496,8 +4505,8 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			example.$$.fragment.c();
-    			attr_dev(div, "class", "svelte-13gawju");
-    			add_location(div, file$6, 155, 1, 4362);
+    			attr_dev(div, "class", "svelte-inau4s");
+    			add_location(div, file$6, 169, 1, 4787);
     		},
 
     		m: function mount(target, anchor) {
@@ -4540,7 +4549,7 @@ var app = (function () {
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block.name, type: "if", source: "(155:1) {#if current === \"Examples\"}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block.name, type: "if", source: "(169:1) {#if current === \"Examples\"}", ctx });
     	return block;
     }
 
@@ -4593,45 +4602,45 @@ var app = (function () {
     			if (if_block3) if_block3.c();
     			attr_dev(meta, "name", "viewport");
     			attr_dev(meta, "content", "width=device-width, initial-scale=1");
-    			add_location(meta, file$6, 111, 0, 2904);
+    			add_location(meta, file$6, 124, 0, 3225);
     			attr_dev(link, "rel", "stylesheet");
     			attr_dev(link, "href", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
-    			add_location(link, file$6, 112, 0, 2976);
+    			add_location(link, file$6, 125, 0, 3297);
     			attr_dev(a0, "href", "#Frontpage");
-    			attr_dev(a0, "class", "active svelte-13gawju");
-    			add_location(a0, file$6, 115, 2, 3140);
+    			attr_dev(a0, "class", "active svelte-inau4s");
+    			add_location(a0, file$6, 128, 2, 3461);
     			attr_dev(a1, "href", "#Examples");
-    			attr_dev(a1, "class", "svelte-13gawju");
-    			add_location(a1, file$6, 116, 2, 3229);
+    			attr_dev(a1, "class", "svelte-inau4s");
+    			add_location(a1, file$6, 129, 2, 3550);
     			attr_dev(a2, "href", "#Contactform");
-    			attr_dev(a2, "class", "svelte-13gawju");
-    			add_location(a2, file$6, 117, 2, 3305);
+    			attr_dev(a2, "class", "svelte-inau4s");
+    			add_location(a2, file$6, 130, 2, 3626);
     			attr_dev(a3, "href", "#Aboutme");
-    			attr_dev(a3, "class", "svelte-13gawju");
-    			add_location(a3, file$6, 118, 2, 3387);
+    			attr_dev(a3, "class", "svelte-inau4s");
+    			add_location(a3, file$6, 131, 2, 3708);
     			attr_dev(i, "class", "fa fa-bars");
-    			add_location(i, file$6, 120, 4, 3529);
+    			add_location(i, file$6, 133, 4, 3850);
     			attr_dev(a4, "href", "javascript:void(0);");
-    			attr_dev(a4, "class", "icon svelte-13gawju");
-    			add_location(a4, file$6, 119, 2, 3458);
-    			attr_dev(div0, "class", "topnav svelte-13gawju");
+    			attr_dev(a4, "class", "icon svelte-inau4s");
+    			add_location(a4, file$6, 132, 2, 3779);
+    			attr_dev(div0, "class", "topnav svelte-inau4s");
     			attr_dev(div0, "id", "myTopnav");
-    			add_location(div0, file$6, 114, 0, 3102);
-    			attr_dev(section0, "class", "svelte-13gawju");
-    			add_location(section0, file$6, 113, 0, 3091);
-    			add_location(hr, file$6, 125, 1, 3590);
+    			add_location(div0, file$6, 127, 0, 3423);
+    			attr_dev(section0, "class", "svelte-inau4s");
+    			add_location(section0, file$6, 126, 0, 3412);
+    			add_location(hr, file$6, 138, 1, 3911);
     			attr_dev(section1, "id", "Frontpage");
-    			attr_dev(section1, "class", "svelte-13gawju");
-    			add_location(section1, file$6, 126, 1, 3597);
+    			attr_dev(section1, "class", "front svelte-inau4s");
+    			add_location(section1, file$6, 139, 1, 3918);
     			attr_dev(div1, "id", "Aboutme");
-    			attr_dev(div1, "class", "svelte-13gawju");
-    			add_location(div1, file$6, 135, 0, 3963);
+    			attr_dev(div1, "class", "svelte-inau4s");
+    			add_location(div1, file$6, 149, 0, 4388);
     			attr_dev(div2, "id", "contactform");
-    			attr_dev(div2, "class", "svelte-13gawju");
-    			add_location(div2, file$6, 144, 0, 4130);
+    			attr_dev(div2, "class", "svelte-inau4s");
+    			add_location(div2, file$6, 158, 0, 4555);
     			attr_dev(div3, "id", "Examples");
-    			attr_dev(div3, "class", "svelte-13gawju");
-    			add_location(div3, file$6, 153, 0, 4309);
+    			attr_dev(div3, "class", "svelte-inau4s");
+    			add_location(div3, file$6, 167, 0, 4734);
 
     			dispose = [
     				listen_dev(a0, "click", ctx.click_handler),
@@ -4825,6 +4834,8 @@ var app = (function () {
 
     	const click_handler_3 = () => $$invalidate('current', current = 'Aboutme');
 
+    	const click_handler_4 = () => $$invalidate('current', current = 'Contactform');
+
     	$$self.$capture_state = () => {
     		return {};
     	};
@@ -4839,7 +4850,8 @@ var app = (function () {
     		click_handler,
     		click_handler_1,
     		click_handler_2,
-    		click_handler_3
+    		click_handler_3,
+    		click_handler_4
     	};
     }
 
